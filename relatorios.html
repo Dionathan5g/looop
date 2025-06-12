@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>NailBook - Relatórios</title>
+    <link rel="stylesheet" href="Css/Css.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header-padrao">
+        <div class="logo-container">
+             <img src="Imagens/logosite.png" alt="Logo NailBook" class="logo">
+            <h1>NailBook - Relatórios</h1>
+        </div>
+            <nav class="menu">
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="agendamentos.html">Agendamentos</a></li>
+                <li><a href="clientes.html">Clientes</a></li>
+                <li><a href="relatorios.html">Relatórios</a></li>
+                <li><a href="contato.html">Fale Conosco</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container-padrao">
+        <section class="formulario-padrao">
+            <h2><i class="fas fa-filter"></i> Filtros do Relatório</h2>
+            
+            <form id="form-filtro">
+                <div class="grupo-input-duplo">
+                    <div class="grupo-input">
+                        <label for="data-inicio">Data Início:</label>
+                        <input type="date" id="data-inicio">
+                    </div>
+                    
+                    <div class="grupo-input">
+                        <label for="data-fim">Data Fim:</label>
+                        <input type="date" id="data-fim">
+                    </div>
+                </div>
+                
+                <div class="grupo-input">
+                    <label for="filtro-status">Status:</label>
+                    <select id="filtro-status">
+                        <option value="todos">Todos</option>
+                        <option value="concluido">Concluídos</option>
+                        <option value="agendado">Agendados</option>
+                        <option value="cancelado">Cancelados</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="botao-padrao">
+                    <i class="fas fa-chart-bar"></i> Gerar Relatório
+                </button>
+            </form>
+        </section>
+
+        <section class="lista-padrao">
+            <h2><i class="fas fa-list"></i> Resultados</h2>
+            
+            <div class="resumo-padrao">
+                <div class="resumo-item">
+                    <span class="resumo-valor" id="total-arrecadado">R$ 0,00</span>
+                    <span class="resumo-label">Total Arrecadado</span>
+                </div>
+                
+                <div class="resumo-item">
+                    <span class="resumo-valor" id="total-servicos">0</span>
+                    <span class="resumo-label">Serviços Realizados</span>
+                </div>
+                
+                <div class="resumo-item">
+                    <span class="resumo-valor" id="total-clientes">0</span>
+                    <span class="resumo-label">Clientes Atendidos</span>
+                </div>
+            </div>
+            
+            <div class="tabela-container">
+                <table class="tabela-padrao" id="tabela-relatorio">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Cliente</th>
+                            <th>Serviço</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dados serão carregados via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-padrao">
+        <p>© 2023 NailBook - Todos os direitos reservados</p>
+    </footer>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script>
+        // Configuração do Supabase
+        const supabaseUrl = 'https://qjygugnuyrkcmammapmf.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        
+        // Carregar e gerenciar relatórios
+        document.addEventListener('DOMContentLoaded', async () => {
+            document.getElementById('form-filtro').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await gerarRelatorio();
+            });
+            
+            // Carrega relatório inicial (últimos 30 dias)
+            const dataFim = new Date();
+            const dataInicio = new Date();
+            dataInicio.setDate(dataInicio.getDate() - 30);
+            
+            document.getElementById('data-inicio').valueAsDate = dataInicio;
+            document.getElementById('data-fim').valueAsDate = dataFim;
+            
+            await gerarRelatorio();
+        });
+        
+        async function gerarRelatorio() {
+            // Implementação similar à anterior
+        }
+    </script>
+</body>
+</html>
